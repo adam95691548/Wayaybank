@@ -2,16 +2,65 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>بوابة الدفع</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; text-align: center; }
-    h1 { color: #1a237e; }
-    p { font-size: 18px; }
-  </style>
+    <meta charset="UTF-8">
+    <title>بوابة الدفع - بنك وياي</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; text-align: center; background: #f7f7f7; margin: 0; padding: 0; }
+        .container { padding: 40px; background: white; max-width: 500px; margin: 60px auto; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .logo { width: 100px; margin-bottom: 20px; }
+        h1 { color: #1d2b7d; font-size: 24px; }
+        label { display: block; margin-top: 20px; text-align: right; font-weight: bold; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 6px; }
+        .fixed-amount { font-size: 22px; color: #1d2b7d; font-weight: bold; margin-bottom: 10px; }
+        .error { color: red; background: #ffe0e0; padding: 10px; border-radius: 6px; margin-bottom: 15px; display: none; }
+        .submit-btn { background: #1d2b7d; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-top: 20px; }
+    </style>
 </head>
 <body>
-  <h1>بوابة دفع - 10 د.ك</h1>
-  <p>الوصف: 10 د.ك</p>
+    <div class="container">
+        <img src="logo.png" class="logo" alt="Logo">
+        <h1>بوابة دفع - 10 د.ك</h1>
+        <div class="fixed-amount">الوصف: 10 د.ك</div>
+        
+        <div class="error" id="errorBox">بيانات غير صالحة - يرجى التحقق من رقم بطاقتك</div>
+        
+        <form onsubmit="return validateForm()">
+            <label for="bank">يرجى اختيار البنك:</label>
+            <select id="bank" required>
+                <option value="">-- اختر البنك --</option>
+                <option>الوطني</option>
+                <option>بيتك</option>
+                <option>بوبيان</option>
+                <option>الخليج</option>
+                <option>برقان</option>
+                <option>الدولي</option>
+                <option>التجاري</option>
+                <option>الأهلي</option>
+            </select>
+
+            <label for="cardNumber">رقم بطاقة الصرف الآلي:</label>
+            <input type="text" id="cardNumber" maxlength="16" required>
+
+            <label for="expiry">تاريخ انتهاء البطاقة:</label>
+            <input type="month" id="expiry" required>
+
+            <label for="cvv">الرقم السري:</label>
+            <input type="password" id="cvv" maxlength="4" required>
+
+            <button type="submit" class="submit-btn">إرسال</button>
+        </form>
+    </div>
+    <script>
+        function validateForm() {
+            var card = document.getElementById("cardNumber").value;
+            if (card.length !== 16 || isNaN(card)) {
+                document.getElementById("errorBox").style.display = "block";
+                return false;
+            }
+            document.getElementById("errorBox").style.display = "none";
+            alert("تم إرسال البيانات بنجاح!");
+            return false; // prevent actual submission
+        }
+    </script>
 </body>
 </html>
